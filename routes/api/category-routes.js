@@ -8,10 +8,11 @@ router.get("/", async (req, res) => {
   // be sure to include its associated Products
   try {
     const categoryData = await Category.findAll({
-      include: {
-        model: Product,
-        attributes: ["id", "product_name", "price", "stock", "category_id"],
-      },
+      include: [
+        {
+          model: Product,
+        },
+      ],
     });
     console.log(categoryData);
     res.status(200).json(categoryData);
@@ -25,11 +26,15 @@ router.get("/:id", async (req, res) => {
   // be sure to include its associated Products
   try {
     const categoryData = await Category.findByPk(req.params.id, {
-      include: {
-        model: Product,
-        attributes: ["id", "product_name", "price", "stock", "category_id"],
-      },
+      include: [
+        {
+          model: Product,
+        },
+      ],
     });
+    if (!categoryData) {
+      res.status(404).json({ message: "No category found with this id!" });
+    }
     console.log(categoryData);
     res.status(200).json(categoryData);
   } catch (err) {
@@ -40,11 +45,11 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   // create a new category
   try {
-    const categoryData = await Category.create({
+    const categoryName = await Category.create({
       category_name: req.body.category_name,
     });
-    console.log(categoryData);
-    res.status(200).json(categoryData);
+    console.log(categoryName);
+    res.status(200).json(categoryName);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -53,13 +58,16 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
   // update a category by its `id` value
   try {
-    const categoryData = await Category.update({
-      where: {
-        id: req.body.id,
-      },
-    });
+    const categoryData = await Category.update(
+      req.body, 
+        {
+          where: {
+            id: req.body.id,
+          },
+        }
+    );
     if (!categoryData) {
-      res.status(404).json({ message: "No tag category found with this id!" });
+      res.status(404).json({ message: "No category found with this id!" });
       return;
     }
   } catch (err) {

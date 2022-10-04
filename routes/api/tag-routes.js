@@ -8,10 +8,9 @@ router.get("/", async (req, res) => {
   // be sure to include its associated Product data
   try {
     const tagData = await Tag.findAll({
-      include: {
+      include: [{
         model: Product,
-        attribuets: ["product_name", "price", "stock", "category_id"],
-      },
+      }],
     });
     console.log(tagData);
     res.status(200).json(tagData);
@@ -26,10 +25,9 @@ router.get("/:id", async (req, res) => {
   // be sure to include its associated Product data
   try {
     const tagData = await Tag.findByPk(req.params.id, {
-      include: {
+      include: [{
         model: Product,
-        attributes: ["product_name", "price", "stock", "category_id"],
-      },
+      }],
     });
     if (!tagData) {
       res.status(404).json({ message: "No location found with this id!" });
