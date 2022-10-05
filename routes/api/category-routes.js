@@ -14,7 +14,6 @@ router.get("/", async (req, res) => {
         },
       ],
     });
-    console.log(categoryData);
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
@@ -35,7 +34,6 @@ router.get("/:id", async (req, res) => {
     if (!categoryData) {
       res.status(404).json({ message: "No category found with this id!" });
     }
-    console.log(categoryData);
     res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
@@ -48,7 +46,6 @@ router.post("/", async (req, res) => {
     const categoryName = await Category.create({
       category_name: req.body.category_name,
     });
-    console.log(categoryName);
     res.status(200).json(categoryName);
   } catch (err) {
     res.status(500).json(err);
@@ -87,10 +84,8 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({ message: "No category found with this id!" });
       return;
     }
-    console.log(categoryData);
     res.status(200).json(categoryData);
   } catch (err) {
-    console.log(err);
     res.status(500).json(err);
   }
 });
