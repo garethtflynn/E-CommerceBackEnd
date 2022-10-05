@@ -23,7 +23,7 @@ In order to usilize the backend technology, the user must first install the Node
 
 ## Screenshots/Visuals
 
-![App Screenshot]()
+![App Screenshot](/assets/ecom.png)
 
 ## Technology
 
